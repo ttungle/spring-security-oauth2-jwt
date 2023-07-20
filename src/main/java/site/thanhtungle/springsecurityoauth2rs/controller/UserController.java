@@ -14,8 +14,8 @@ import site.thanhtungle.springsecurityoauth2rs.model.response.BaseResponseWithou
 public class UserController {
 
     @GetMapping("")
-    public ResponseEntity<BaseResponseWithoutData> helloUserController() {
-        BaseResponseWithoutData resBody = new BaseResponseWithoutData(HttpStatus.OK.value(), "Hello");
+    public ResponseEntity<BaseResponseWithoutData> getUser() {
+        BaseResponseWithoutData resBody = new BaseResponseWithoutData(HttpStatus.OK.value(), "User level access.");
         return ResponseEntity.ok().body(resBody);
     }
 }

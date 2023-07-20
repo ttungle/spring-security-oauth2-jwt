@@ -34,12 +34,10 @@ public class SpringSecurityOauth2RsApplication {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			System.out.println("Roles" + adminRole);
-
 			ApplicationUser admin = new ApplicationUser(
 					1,
 					"admin",
-					passwordEncoder.encode("password"),
+					passwordEncoder.encode("admin"),
 					roles
 			);
 

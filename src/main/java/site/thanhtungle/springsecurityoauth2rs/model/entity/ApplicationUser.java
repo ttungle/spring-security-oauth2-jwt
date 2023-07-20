@@ -1,20 +1,15 @@
 package site.thanhtungle.springsecurityoauth2rs.model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class ApplicationUser implements UserDetails {
 
     @Id
@@ -35,19 +30,52 @@ public class ApplicationUser implements UserDetails {
     )
     private Set<Role> authorities;
 
+    public ApplicationUser() {
+        super();
+        this.authorities = new HashSet<Role>();
+    }
+
+    public ApplicationUser(long userId, String username, String password, Set<Role> authorities) {
+        super();
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

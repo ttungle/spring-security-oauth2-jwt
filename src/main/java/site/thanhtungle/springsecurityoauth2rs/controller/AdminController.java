@@ -14,7 +14,7 @@ import site.thanhtungle.springsecurityoauth2rs.model.response.BaseResponseWithou
 public class AdminController {
 
     @GetMapping("")
-    public ResponseEntity<BaseResponseWithoutData> helloAdminController() {
+    public ResponseEntity<BaseResponseWithoutData> getAdmin() {
         BaseResponseWithoutData resBody = new BaseResponseWithoutData(HttpStatus.OK.value(), "Admin access level");
 
         return ResponseEntity.ok().body(resBody);
