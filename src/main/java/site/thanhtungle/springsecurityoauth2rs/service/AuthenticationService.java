@@ -1,11 +1,10 @@
 package site.thanhtungle.springsecurityoauth2rs.service;
 
 import site.thanhtungle.springsecurityoauth2rs.model.dto.LoginResponseDTO;
-import site.thanhtungle.springsecurityoauth2rs.model.entity.ApplicationUser;
 
 public interface AuthenticationService {
 
-    public ApplicationUser registerUser(String username, String password);
+    public LoginResponseDTO registerUser(String username, String password) throws Exception ;
 
-    LoginResponseDTO loginUser(String username, String password);
+    public LoginResponseDTO loginUser(String username, String password) throws Exception;
 }

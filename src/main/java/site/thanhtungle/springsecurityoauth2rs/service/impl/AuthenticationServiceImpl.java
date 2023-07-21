@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private TokenServiceImpl tokenService;
 
     @Override
-    public ApplicationUser registerUser(String username, String password){
+    public LoginResponseDTO registerUser(String username, String password) throws Exception {
 
         String encodedPassword = passwordEncoder.encode(password);
         Role userRole = roleRepository.findByAuthority("USER").get();
@@ -43,10 +43,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         authorities.add(userRole);
 
-        return userRepository.save(new ApplicationUser(0, username, encodedPassword, authorities));
+        ApplicationUser newUser = new ApplicationUser(0, username, encodedPassword, authorities);
+        userRepository.save(newUser);
+
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password)
+            );
+
+            String token = tokenService.generateJwt(auth);
+            return new LoginResponseDTO(newUser, token);
+        } catch(AuthenticationException e) {
+            throw new Exception("Failed to register. Please try again.");
+        }
     }
 
-    public LoginResponseDTO loginUser(String username, String password){
+    public LoginResponseDTO loginUser(String username, String password) throws Exception {
 
         try{
             Authentication auth = authenticationManager.authenticate(
@@ -58,7 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
 
         } catch(AuthenticationException e){
-            return new LoginResponseDTO(null, "");
+            throw new Exception("Failed to login. Please try again.");
         }
     }
 }
