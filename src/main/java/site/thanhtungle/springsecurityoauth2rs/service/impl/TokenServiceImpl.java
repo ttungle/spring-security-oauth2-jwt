@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import site.thanhtungle.springsecurityoauth2rs.service.TokenService;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +33,7 @@ public class TokenServiceImpl implements TokenService {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
+                .expiresAt(now.plus(1, ChronoUnit.HOURS))
                 .subject(authentication.getName())
                 .claim("roles", scope)
                 .build();

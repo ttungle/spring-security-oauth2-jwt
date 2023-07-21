@@ -8,6 +8,7 @@ public class KeyGeneratorUtility {
         KeyPair keyPair;
 
         try {
+            // Generate the RSA key pair with the standard Java cryptographic facilities
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             keyPairGenerator.initialize(2048);
             keyPair = keyPairGenerator.generateKeyPair();
